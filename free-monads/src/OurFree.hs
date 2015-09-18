@@ -3,6 +3,8 @@
 
 module OurFree where
 
+import Control.Applicative
+
 data Action next
   = Receive (String -> next)
   | Response String next
@@ -15,6 +17,17 @@ instance (Functor f) => Monad (Free f) where
   return = Pure
   Pure a >>= f = f a
   Free f >>= g = Free $ fmap (>>= g) f
+
+instance Functor f => Functor (Free f) where
+  fmap f = go where
+    go (Pure a)  = Pure (f a)
+    go (Free fa) = Free (go <$> fa)
+
+instance (Functor f) => Applicative (Free f) where
+  pure = Pure
+  Pure a <*> Pure b = Pure $ a b
+  Pure a <*> Free mb = Free $ fmap a <$> mb
+  Free ma <*> b = Free $ (<*> b) <$> ma
 
 type ActionM = Free Action
 
