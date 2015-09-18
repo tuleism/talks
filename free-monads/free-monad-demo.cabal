@@ -1,0 +1,27 @@
+-- This file has been generated from package.yaml by hpack version 0.5.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           free-monad-demo
+version:        0.0.0
+synopsis:       Demo Free Monad
+maintainer:     Linh Nguyen <tuleism@gmail.com>
+license:        MIT
+build-type:     Simple
+cabal-version:  >= 1.10
+
+executable hpack
+  main-is: Main.hs
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  build-depends:
+      base >= 4.7 && < 5
+    , containers
+    , free
+    , mtl
+  other-modules:
+      Free
+      KVStore
+      OurFree
+  default-language: Haskell2010
